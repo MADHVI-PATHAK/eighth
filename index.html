@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>music</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    @import url('http://fonts.cdnfonts.com/css/jost');
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0%;
+    box-sizing: border-box;
+}
+html{
+    font-size: 62.5%;
+    font-family:"jost",sans-serif ;
+}
+.main_div{
+width: 100vw;
+height: 100vh;
+background-color: rgb(168, 43, 120);
+display: grid;
+place-items: center;
+}
+.music_container{
+    width: 35rem;
+    height: 55rem;
+    background-color: cornsilk;
+    border-radius: 2rem;
+    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0, 0, 0, 0.2);
+    padding: 3rem;
+    text-align: center;
+}
+.music_container #title{
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    word-spacing: 0.5rem;
+    color: rgba(0, 0, 0, 0.2);
+    margin: 2rem 0 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight:500 ;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+.music_container #artist{
+    color: plum;
+    text-transform: capitalize;
+    letter-spacing: 0.1rem;
+    font-size: 2rem;
+    margin-bottom: 4rem;
+    font-weight: 300;
+}
+.img_container{
+width: 25rem;
+height: 25rem;
+margin: auto;
+}
+img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 1.2rem 3rem 0.5rem rgba(0, 0, 0, 0.4);
+}
+.music_controls{
+    width: 20rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    margin-top: 5rem;
+}
+.music_controls .fas{
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 2rem;
+    cursor: pointer;
+    filter: drop-shadow(0 1.2rem 3rem 0.5rem rgba(0,0,0,0.4));
+}
+.music_controls .main_button{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: rosybrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+}
+.music_controls .fas:hover{
+    color: silver;
+}
+.music_controls .fa-play:hover{
+    background-color: thistle;
+    color: black;
+    box-shadow: 0 1rem 2rem 0.2rem rgba(0, 0, 0, 0.4);
+}
+.anime{
+    animation: rotatePlayer 3s linear infinite;
+}
+@keyframes rotatePlayer{
+    from {
+        transform: rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+</style>
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">crazy in love</h2>
+            <h3 id="artist">sofia karlberg</h3>
+            <div class="img_container">
+            <img src="image-1.jpg" alt="">
+            </div>
+        </div>
+        <audio src="music-1.mp3"></audio>
+        <div class="music_controls">
+          <i class="fas fa-backward" id="prev" title="Previous"></i>
+          <i class="fas fa-play main_button" id="play" title="Play"></i>
+          <i class="fas fa-forward" id="next" title="Next"></i>    
+            
+        </div>
+    </div>
+    <script>
+      const play=document.getElementById('play');
+      const music=document.querySelector('audio');
+      const img=document.querySelector('img');
+      const artist=document.getElementById('artist');
+      const title=document.getElementById('title');
+      const prev=document.getElementById('prev');
+      const next=document.getElementById('next');
+      const songs=[{
+          name: "music-1",
+          title:"crazy in love",
+          artist:"sofia karlberg", },
+      {name: "music-2",
+          title:"solo",
+          artist:"clean bandit ft demi lovato",},
+      {name: "music-3",
+          title:"sugar & brownies",
+          artist:"dharia",},
+      {name: "music-4",
+          title:"sun saathiya",
+          artist:"priya saraiya",},
+      {name: "music-5",
+          title:"the less i know the better",
+          artist:"tame impala",},
+      {name: "music-6",
+          title:"blood sweat tears",
+          artist:"BTS",},
+      {name: "music-7",
+          title:"desire(gryffin remix)",
+          artist:"years & years",},
+      {name: "music-8",
+          title:"another love",
+          artist:"tom odell",},
+      {name: "music-9",
+          title:"go fuck yourself",
+          artist:"two feet",},
+    ];
+      let isPlaying=false;
+      const playMusic=()=>{
+          isPlaying=true;
+          music.play();
+          play.classList.replace('fa-play','fa-pause');
+          img.classList.add('anime');
+      };
+      const pauseMusic=()=>{
+          isPlaying=false;
+          music.pause();
+          play.classList.replace('fa-pause','fa-play');
+          img.classList.remove('anime');
+        };
+        play.addEventListener('click',()=>{
+            if (isPlaying){
+                pauseMusic();
+            }else{
+                playMusic();
+            }
+            //isPlaying ? pauseMusic():playMusic();
+        });  
+        const loadSong=(songs)=>{
+            title.textContent=songs.title;
+            artist.textContent=songs.artist;
+            music.src=songs.name+".mp3";
+            img.src=songs.name+".jpg";
+        };
+        songIndex=0;
+        const nextSong=()=>{
+            songIndex=(songIndex+1)%songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+        const prevSong=()=>{
+            songIndex=(songIndex-1 + songs.length)%songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+        next.addEventListener('click',nextSong);
+        prev.addEventListener('click',prevSong);
+
+    </script>
+</body>
+</html>
